@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Query
 import uvicorn
 
-DB_PATH = r"D:\AppData\data.db"  # 替换为你的实际 .db 路径
+DB_PATH = r"C:\Users\C\Downloads\PTL\sortAi.db"  # 替换为你的实际 .db 路径
 
 app = FastAPI(title="WCS SQLite Read Service")
 
@@ -22,22 +22,18 @@ BASE_JOIN_SQL = """
 SELECT
     c.id              AS chute_id,
     c.name            AS chute_name,
-    c.sn              AS chute_sn,
     c.physicalIdx     AS physical_idx,
     c.orderNo         AS order_no,
     c.orderNum        AS order_num,
-    c.stock           AS stock,
-    c.complete        AS complete,
+    c.led             AS led,
     p.id              AS pac_id,
-    p.sn              AS pac_sn,
-    p.taskName        AS task_name,
     p.chuteName       AS pac_chute_name,
     p.physicalChute   AS physical_chute,
     p.status          AS pac_status,
-    p.reason          AS reason,
-    p.errMsg          AS err_msg,
-    p.imageInfo       AS image_info,
-    p.detNum          AS det_num
+    p.barcode         AS barcode,
+    p.release         AS is_release,
+    p.releaseAt       AS releaseAt,
+    p.detail          AS detail
 FROM wcs_sow_wall_chute c
 LEFT JOIN wcs_pac_info p
     ON TRIM(CAST(c.physicalIdx AS TEXT)) = TRIM(CAST(p.physicalChute AS TEXT))
